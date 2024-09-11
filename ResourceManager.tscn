@@ -1,0 +1,191 @@
+[gd_scene load_steps=5 format=3 uid="uid://4ccvhhvxirfq"]
+
+[ext_resource type="Script" path="res://main_game.gd" id="1_apjk5"]
+[ext_resource type="Script" path="res://mine_manager.gd" id="2_2keek"]
+[ext_resource type="Script" path="res://resource_manager.gd" id="2_x0mxm"]
+[ext_resource type="Script" path="res://smelting_manager.gd" id="4_bhpik"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+script = ExtResource("1_apjk5")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 31.0
+grow_horizontal = 2
+
+[node name="NavigationButtons" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="MapButton" type="Button" parent="VBoxContainer/NavigationButtons"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Map"
+
+[node name="BasesButton" type="Button" parent="VBoxContainer/NavigationButtons"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Bases"
+
+[node name="Button" type="Button" parent="VBoxContainer/NavigationButtons"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Transfer"
+
+[node name="TaskManagement" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="TaskButton" type="Button" parent="VBoxContainer/TaskManagement"]
+layout_mode = 2
+text = "Tasks"
+
+[node name="QuestButton" type="Button" parent="VBoxContainer/TaskManagement"]
+layout_mode = 2
+text = "Quests"
+
+[node name="MainSection" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -112.5
+offset_bottom = 112.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MineralsManagement" type="HBoxContainer" parent="MainSection"]
+layout_mode = 2
+script = ExtResource("2_2keek")
+
+[node name="MineBuildingButtons" type="VBoxContainer" parent="MainSection/MineralsManagement"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+
+[node name="addStoneMine" type="Button" parent="MainSection/MineralsManagement/MineBuildingButtons"]
+layout_mode = 2
+text = "Build Stone Mine"
+
+[node name="AddIronMine" type="Button" parent="MainSection/MineralsManagement/MineBuildingButtons"]
+layout_mode = 2
+text = "Build Iron Mine"
+
+[node name="AddDuriumMine" type="Button" parent="MainSection/MineralsManagement/MineBuildingButtons"]
+layout_mode = 2
+tooltip_text = "Cost:
+Stone x 15
+Iron x 10"
+text = "Build Durium Mine"
+
+[node name="AddZentriteMine" type="Button" parent="MainSection/MineralsManagement/MineBuildingButtons"]
+layout_mode = 2
+text = "Build Zentrite Mine"
+
+[node name="MinesDisplay" type="VBoxContainer" parent="MainSection/MineralsManagement"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+
+[node name="Mines Label" type="Label" parent="MainSection/MineralsManagement/MinesDisplay"]
+layout_mode = 2
+text = "Mines"
+vertical_alignment = 1
+
+[node name="Mines" type="VBoxContainer" parent="MainSection/MineralsManagement/MinesDisplay"]
+layout_mode = 2
+
+[node name="Minerals" type="VBoxContainer" parent="MainSection/MineralsManagement"]
+layout_mode = 2
+size_flags_horizontal = 3
+script = ExtResource("2_x0mxm")
+
+[node name="MineralLabel" type="Label" parent="MainSection/MineralsManagement/Minerals"]
+layout_mode = 2
+text = "Minerals"
+
+[node name="HSeparator" type="HSeparator" parent="MainSection"]
+layout_mode = 2
+
+[node name="AlloyManagement" type="HBoxContainer" parent="MainSection"]
+layout_mode = 2
+script = ExtResource("4_bhpik")
+
+[node name="SmelterBuildButtons" type="VBoxContainer" parent="MainSection/AlloyManagement"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+
+[node name="AddDuroniteSmelter" type="Button" parent="MainSection/AlloyManagement/SmelterBuildButtons"]
+layout_mode = 2
+text = "Build Duronite Smelter"
+
+[node name="AlloySmelters" type="VBoxContainer" parent="MainSection/AlloyManagement"]
+layout_mode = 2
+size_flags_horizontal = 6
+
+[node name="SmelterLabel" type="Label" parent="MainSection/AlloyManagement/AlloySmelters"]
+layout_mode = 2
+text = "Smelters"
+
+[node name="DuroniteSmelters" type="VBoxContainer" parent="MainSection/AlloyManagement/AlloySmelters"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MainSection/AlloyManagement/AlloySmelters/DuroniteSmelters"]
+layout_mode = 2
+
+[node name="DuroniteSmelterLabel" type="Label" parent="MainSection/AlloyManagement/AlloySmelters/DuroniteSmelters/HBoxContainer"]
+layout_mode = 2
+text = "Duronite"
+vertical_alignment = 1
+
+[node name="DuroniteSmelterCount" type="Label" parent="MainSection/AlloyManagement/AlloySmelters/DuroniteSmelters/HBoxContainer"]
+layout_mode = 2
+text = "0"
+
+[node name="ProgressContainer" type="VBoxContainer" parent="MainSection/AlloyManagement/AlloySmelters/DuroniteSmelters"]
+layout_mode = 2
+
+[node name="Alloys" type="VBoxContainer" parent="MainSection/AlloyManagement"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="AlloyHeader" type="Label" parent="MainSection/AlloyManagement/Alloys"]
+layout_mode = 2
+text = "Alloys"
+
+[node name="SteelContainer" type="HBoxContainer" parent="MainSection/AlloyManagement/Alloys"]
+layout_mode = 2
+
+[node name="SteelLabel" type="Label" parent="MainSection/AlloyManagement/Alloys/SteelContainer"]
+layout_mode = 2
+text = "Steel"
+
+[node name="SteelAmount" type="Label" parent="MainSection/AlloyManagement/Alloys/SteelContainer"]
+layout_mode = 2
+horizontal_alignment = 1
+
+[node name="Duronite" type="HBoxContainer" parent="MainSection/AlloyManagement/Alloys"]
+layout_mode = 2
+
+[node name="DuroniteHeader" type="Label" parent="MainSection/AlloyManagement/Alloys/Duronite"]
+layout_mode = 2
+text = "Duronite"
+
+[node name="DuroniteCount" type="Label" parent="MainSection/AlloyManagement/Alloys/Duronite"]
+layout_mode = 2
+text = "0"
+
+[connection signal="pressed" from="MainSection/MineralsManagement/MineBuildingButtons/addStoneMine" to="MainSection/MineralsManagement" method="addMine" binds= ["stone"]]
+[connection signal="pressed" from="MainSection/MineralsManagement/MineBuildingButtons/AddIronMine" to="MainSection/MineralsManagement" method="addMine" binds= ["iron"]]
+[connection signal="pressed" from="MainSection/MineralsManagement/MineBuildingButtons/AddDuriumMine" to="MainSection/MineralsManagement" method="addMine" binds= ["durium"]]
+[connection signal="pressed" from="MainSection/MineralsManagement/MineBuildingButtons/AddZentriteMine" to="MainSection/MineralsManagement" method="addMine" binds= ["zentrite"]]
+[connection signal="pressed" from="MainSection/AlloyManagement/SmelterBuildButtons/AddDuroniteSmelter" to="." method="_addDuroniteAlloySmelter"]
