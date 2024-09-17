@@ -1,0 +1,40 @@
+{
+	"planets": [
+		{
+			"name": "earth",
+			"unlocked": true,
+			"discovered": true,
+			"resources": {
+				"iron": 1000,
+				"stone": 500
+			},
+			"buildings": {
+
+			},
+			"time": {
+				"day": 60,
+				"week": 7,
+				"month": 30,
+				"year": 365
+			}
+		},
+		{
+			"name": "mars",
+			"unlocked": false,
+			"discovered": false,
+			"resources": {
+				"iron": 0,
+				"stone": 0
+			},
+			"buildings": {
+
+			},
+			"time": {
+				"day": 61.65,
+				"week": 14,
+				"month": 55,
+				"year": 660
+			}
+		}
+	]
+}

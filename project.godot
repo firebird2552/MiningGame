@@ -15,6 +15,10 @@ run/main_scene="res://ResourceManager.tscn"
 config/features=PackedStringArray("4.3", "Mobile")
 config/icon="res://icon.svg"
 
+[autoload]
+
+PlanetController="*res://planets/planet_controller.gd"
+
 [display]
 
 window/size/viewport_width=1080

@@ -2,6 +2,7 @@ extends Node
 
 var mines = {
 	"stone": 1,
+	"carbon": 1,
 	"iron": 1,
 	"crystals": 0,
 	"durium": 0,
@@ -11,7 +12,6 @@ var mines = {
 }
 
 func addMine(mine: String):
-	print("Adding Mine: " + mine)
 	mines[mine] += 1
 	
 var mineNodes: Dictionary;

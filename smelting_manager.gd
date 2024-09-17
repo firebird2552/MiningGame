@@ -1,5 +1,6 @@
 extends Node
 
+var Constants = preload("res://constants.gd")
 
 # Alloy data
 var alloys = {
@@ -13,23 +14,14 @@ var alloyRecipes = {
         "iron": 2,
         "carbon": 1
     },
-	"duronite": {
-		"durium": 3,
-		"zentrite": 2
-	}
+    "duronite": {
+        "durium": 3,
+        "zentrite": 2
+    }
 }
 var minerals: Dictionary;
 var mineralsNode: Node;
 var mineralManagementNode: Node;
-
-func _ready() -> void:
-    var parent: Node = get_parent()
-    mineralManagementNode = parent.get_node("MineralsManagement")
-    mineralsNode = parent.get_node("MineralsManagement/Minerals")
-    minerals = mineralsNode.minerals
-
-# Store smelting tasks for each smelter
-var smeltTimers = {}
 
 var smelters = {
     "steel": {
@@ -44,13 +36,69 @@ var smelters = {
     }
 }
 
+var progressContainers = {}
+var smelterCountLabels = {}
+var alloyCountLabels = {}
+
+
+func _ready() -> void:
+    var parent: Node = get_parent()
+    mineralManagementNode = parent.get_node("MineralSection/MineralsManagement")
+    mineralsNode = parent.get_node("MineralSection/MineralsManagement/Minerals")
+    minerals = mineralsNode.minerals
+
+    var alloySmelterContainer: Node = get_node("AlloyManagement/AlloySmelters")
+    for smelter in smelters:
+        var smelterName = smelter.capitalize()
+        var smelterContainer = VBoxContainer.new()
+        var smelterLabelContainer = HBoxContainer.new()
+        smelterContainer.add_child(smelterLabelContainer)
+        smelterLabelContainer.name = smelterName + "Smelters"
+        var smelterLabel = Label.new()
+        smelterLabel.name = smelterName + "Smelters"
+        smelterLabel.text = smelterName
+        var smelterCount = Label.new()
+        smelterCount.name = smelterName + "Count"
+        smelterCount.text = str(smelters[smelter].count)
+        smelterCountLabels[smelter] = smelterCount
+        smelterLabelContainer.add_child(smelterLabel)
+        smelterLabelContainer.add_child(smelterCount)
+
+        var progressContainer = VBoxContainer.new()
+        progressContainer.name = "ProgressContainer"
+        progressContainers[smelter] = progressContainer
+        smelterContainer.add_child(progressContainer)
+        alloySmelterContainer.add_child(smelterContainer)
+
+    for alloy in alloys:
+        var alloyNode = get_node("AlloyManagement/Alloys")
+        print(alloyNode)
+
+        if alloyNode != null:
+            var alloyName = alloy.capitalize()
+            var alloyContainer = HBoxContainer.new()
+            alloyContainer.name = alloyName + "Container"
+            var alloyLabel = Label.new()
+            alloyLabel.name = alloyName + "Alloy"
+            alloyLabel.text = alloyName
+            var countLabel = Label.new()
+            countLabel.name = alloyName + "Count"
+            countLabel.text = str(alloys[alloy])
+            alloyCountLabels[alloy] = countLabel
+            alloyContainer.add_child(alloyLabel)
+            alloyContainer.add_child(countLabel)
+            alloyNode.add_child(alloyContainer)
+
+# Store smelting tasks for each smelter
+var smeltTimers = {}
+
+
 # Function to start batch smelting
 func smeltAlloy() -> void:
     for smelter in smelters:
         if smelters[smelter]["busy"]:
             continue
-        var progressContainerString = "BuildingMenu/AlloySmelters/" + smelter.capitalize() + "Smelters/ProgressContainer"
-        var progressContainer = get_node(progressContainerString)
+        var progressContainer = progressContainers[smelter]
         var recipe = alloyRecipes[smelter]
         var smelterCount = smelters[smelter]["count"]
 
@@ -73,7 +121,7 @@ func smeltAlloy() -> void:
 
         # Create a new timer for the batch smelting task
         var timer = Timer.new()
-        timer.wait_time = 10  # Adjust to represent the batch time (e.g., 10 seconds)
+        timer.wait_time = 10 * Constants.SMELTING_RATES[smelter]  # Adjust to represent the batch time (e.g., 10 seconds)
         timer.one_shot = true
         add_child(timer)
 
@@ -138,17 +186,19 @@ func checkAlloyCompleteStatus(delta):
         smeltTimers[entry["smelter"]]["tasks"].erase(entry["task"])
 
 func _process(delta: float) -> void:
+    updateAlloys()
+
     smeltAlloy()
     checkAlloyCompleteStatus(delta)	
 
 
-func updateMinerals() -> void:
+func updateAlloys() -> void:
     for alloy in alloys:
-        var alloyName = alloy.capitalize()
-        var nodeName = "Alloys/" + alloyName + "/" + alloyName + "Count"
-        get_node(nodeName).text = str(alloys[alloy])
+        var labelNode = alloyCountLabels[alloy]
+        labelNode.text = str(alloys[alloy])
     for smelter in smelters:
-        var smelterName = smelter.capitalize()
-        var nodeName = "AlloySmelters/" + smelterName + "Smelters/HBoxContainer/" + smelterName + "SmelterCount"
-        get_node(nodeName).text = str(smelters[smelter]["count"])
+        var labelNode = smelterCountLabels[smelter]
+        labelNode.text = str(smelters[smelter]["count"])
 
+func addSmelter(smelterName: String) -> void:
+    smelters[smelterName].count += 1

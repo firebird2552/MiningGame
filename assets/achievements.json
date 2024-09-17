@@ -1,0 +1,21 @@
+{
+    "achievements": [
+        {
+            "name": "First Steps",
+            "description": "Complete your first mission.",
+            "completed": false
+        },
+        {
+            "achievements": [
+                {
+                    "name": "Beginner Miner",
+                    "description": "Build 10 mines on a planet.",
+                    "completed": false,
+                    "type": "building",
+                    "target": "mine",
+                    "quantity": 10
+                }
+            ]
+        }
+    ]
+}

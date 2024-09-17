@@ -7,6 +7,7 @@ var mineManagerNode: Node;
 var mines: Dictionary;
 var minerals = {
 	"stone": 0,
+	"carbon": 0,
 	"iron": 0,
 	"crystals": 0,
 	"durium": 0,
@@ -45,6 +46,7 @@ func _ready() -> void:
 
 var mine_accumulators = {
 	'stone': 0.0,
+	'carbon': 0.0,
 	'iron': 0.0,
 	'durium': 0.0,
 	'zentrite': 0.0
