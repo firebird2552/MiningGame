@@ -72,7 +72,6 @@ func _ready() -> void:
 
     for alloy in alloys:
         var alloyNode = get_node("AlloyManagement/Alloys")
-        print(alloyNode)
 
         if alloyNode != null:
             var alloyName = alloy.capitalize()
@@ -169,8 +168,6 @@ func checkAlloyCompleteStatus(delta):
                 alloys[smelter] += task["craftCount"]
             else:
                 alloys[smelter] = task["craftCount"]
-
-            print("Batch smelting complete for ", smelter, ": ", task["craftCount"], " units")
 
             # Mark the smelter as no longer busy
             smelters[smelter]["busy"] = false

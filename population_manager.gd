@@ -10,7 +10,6 @@ var femalePopulationLabel = Label.new()
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	population_manager = get_node("PopulationManager")
 	createNodeLayout()
 
 func createNodeLayout() -> void:
@@ -21,22 +20,8 @@ func createNodeLayout() -> void:
 	malePopulationLabel.text = "Male Population: " + str(population.getMalePopulation())
 	femalePopulationLabel.text = "Female Population: " + str(population.getFemalePopulation())
 
-
-
 	container.add_child(totalPopulationLabel)
 	container.add_child(malePopulationLabel)
 	container.add_child(femalePopulationLabel)
-	population_manager.add_child(container)
-
-
-
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	population.updatePopulation(delta)
-
-	totalPopulationLabel.text = "Total Population: " + str(population.getTotalPopulation())
-	malePopulationLabel.text = "Male Population: " + str(population.getMalePopulation())
-	femalePopulationLabel.text = "Female Population: " + str(population.getFemalePopulation())
-
-	pass

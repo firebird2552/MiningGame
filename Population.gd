@@ -10,19 +10,24 @@ var resource_limit: int = 99999999999
 
 var birth_accumulator: float = 0.0
 
-func updatePopulation(delta: float) -> void:
+var populationUINode: Node
+
+var totalPopLabel = Label.new()
+var malePopLabel = Label.new()
+var femalePopLabel = Label.new()
+
+
+func update_population(p_year_length: int) -> void:
     if male_population and female_population:
         var annual_births: float = total_population * birth_rate
-        var possible_births = annual_births * (delta/365.0)
+        print("Possible Annual Births: " + str(annual_births))
+        var possible_births: int = annual_births / (p_year_length)
+        print("Possible Births: " + str(possible_births))
+        
+        if possible_births:
 
-        birth_accumulator += possible_births
-        if birth_accumulator >= 1.0:
-            var births = int(birth_accumulator)
-
-            birth_accumulator -= births
-
-            if total_population + births <= resource_limit:
-                distribute_births(births)
+            if total_population + possible_births <= resource_limit:
+                distribute_births(possible_births)
             else:
                 distribute_births(resource_limit - total_population)
 
@@ -41,6 +46,7 @@ func distribute_births(births:int):
     setTotalPopulation()
 
 func _init(p_male_population: int, p_female_population: int):
+    createUILayout()
     male_population = p_male_population
     female_population = p_female_population
     setTotalPopulation()
@@ -78,3 +84,29 @@ func adjustFemalePopulation(amount: int, decrement: bool) -> void:
 
 func setTotalPopulation() -> void:
     total_population = male_population + female_population
+
+func createUILayout() -> void:
+    """
+    This function creates a UI layout for displaying population statistics.
+    Returns:
+        Node: The UI layout containing population statistics.
+    """
+    var container = VBoxContainer.new()
+
+    totalPopLabel.text = "Total Population: %s" % total_population
+    malePopLabel.text = "Male Population: %s" % male_population
+    femalePopLabel.text = "Female Population: %s" % female_population
+    container.add_child(totalPopLabel)
+    container.add_child(malePopLabel)
+    container.add_child(femalePopLabel)
+
+    populationUINode = container
+
+func getUINode() -> Node:
+    return populationUINode
+
+    
+func updateLabels() -> void:
+    totalPopLabel.text = "Total Population: %s" % total_population
+    malePopLabel.text = "Male Population: %s" % male_population
+    femalePopLabel.text = "Female Population: %s" % female_population

@@ -8,9 +8,14 @@ func _ready():
 	controlNode = get_parent().get_node("Control")
 	var planets_json = load_planets()
 	process_planets(planets_json)
+	for planet in planets:
+		planets[planet].create_planet_info()
 
-func _process(_delta: float) -> void:
-	pass
+func _process(delta: float) -> void:
+	for planet in planets.values():
+		planet.population.updateLabels()
+		planet.update_planet(delta)
+		planet.update_planet_info()
 
 func load_planets() -> Dictionary:
 	var file = FileAccess.open("res://assets/planets.json", FileAccess.READ)
@@ -42,7 +47,7 @@ func process_planets(planets_json: Dictionary) -> void:
 		add_child(new_planet)
 		if discovered:
 			var button = Button.new()
-			button.text = planet_name
+			button.text = planet_name.capitalize()
 			button.connect("pressed", Callable(selectPlanet).bind(planet_name))
 			var container = HBoxContainer.new()
 			container.add_child(button)
@@ -56,3 +61,8 @@ func selectPlanet(planet_name: String):
 
 func getPlanets() -> Dictionary:
 	return planets
+
+
+
+
+

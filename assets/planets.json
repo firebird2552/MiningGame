@@ -8,14 +8,30 @@
 				"iron": 1000,
 				"stone": 500
 			},
-			"buildings": {
-
-			},
+			"buildings": {},
 			"time": {
 				"day": 60,
 				"week": 7,
 				"month": 30,
 				"year": 365
+			},
+			"seasons": {
+				"spring": {
+					"start": 3,
+					"end": 6
+				},
+				"summer": {
+					"start": 6,
+					"end": 9
+				},
+				"fall": {
+					"start": 9,
+					"end": 12
+				},
+				"winter": {
+					"start": 12,
+					"end": 3
+				}
 			}
 		},
 		{
@@ -26,14 +42,30 @@
 				"iron": 0,
 				"stone": 0
 			},
-			"buildings": {
-
-			},
+			"buildings": {},
 			"time": {
 				"day": 61.65,
 				"week": 14,
 				"month": 55,
 				"year": 660
+			},
+			"seasons": {
+				"spring": {
+					"start": 5,
+					"end": 8
+				},
+				"summer": {
+					"start": 8,
+					"end": 11
+				},
+				"fall": {
+					"start": 11,
+					"end": 4
+				},
+				"winter": {
+					"start": 4,
+					"end": 5
+				}
 			}
 		}
 	]
